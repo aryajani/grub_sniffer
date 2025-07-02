@@ -83,7 +83,7 @@ const Index = () => {
               <Utensils className="h-6 w-6 text-white" />
             </div>
             <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Menu Protein Analyzer
+              GrubSniffer
             </h1>
           </div>
           <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto">
