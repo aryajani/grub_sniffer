@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ImageUpload } from '@/components/ImageUpload';
 import { MenuAnalysis } from '@/components/MenuAnalysis';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Utensils, Sparkles, FileText } from 'lucide-react';
+import { ocrService } from '@/services/ocrService';
+import { openaiService } from '@/services/openaiService';
 
 interface MacroInfo {
   protein: number;
@@ -22,28 +24,28 @@ const Index = () => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const { toast } = useToast();
 
-  // Mock analysis function - in real implementation, this would call an AI service
+  // Real analysis function using OCR and OpenAI
   const analyzeMenuImage = async (file: File): Promise<AnalysisResult> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    try {
+      // Step 1: Extract text from image using OCR
+      console.log('Extracting text from image...');
+      const extractedText = await ocrService.extractText(file);
+      console.log('Extracted text:', extractedText);
 
-    // Mock data - in real implementation, this would come from AI analysis
-    const mockResults = [
-      {
-        menuItem: "Grilled Chicken Breast with Quinoa",
-        macros: { protein: 45, carbs: 32, fat: 8, calories: 380 }
-      },
-      {
-        menuItem: "Salmon Teriyaki Bowl",
-        macros: { protein: 42, carbs: 28, fat: 15, calories: 390 }
-      },
-      {
-        menuItem: "Greek Chicken Wrap",
-        macros: { protein: 38, carbs: 35, fat: 12, calories: 375 }
+      if (!extractedText || extractedText.trim().length < 10) {
+        throw new Error('Could not extract sufficient text from the image. Please ensure the image is clear and contains readable menu text.');
       }
-    ];
 
-    return mockResults[Math.floor(Math.random() * mockResults.length)];
+      // Step 2: Analyze the extracted text with OpenAI
+      console.log('Analyzing menu with AI...');
+      const analysisResult = await openaiService.analyzeMenuText(extractedText);
+      console.log('Analysis result:', analysisResult);
+
+      return analysisResult;
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      throw error;
+    }
   };
 
   const handleImageUpload = async (file: File) => {
@@ -59,9 +61,10 @@ const Index = () => {
         description: `Found highest protein item: ${result.menuItem}`,
       });
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Please try again with a different image.";
       toast({
         title: "Analysis Failed",
-        description: "Please try again with a different image.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -72,6 +75,13 @@ const Index = () => {
   const handleReset = () => {
     setAnalysisResult(null);
   };
+
+  // Cleanup OCR worker on component unmount
+  useEffect(() => {
+    return () => {
+      ocrService.cleanup();
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

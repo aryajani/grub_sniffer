@@ -6,6 +6,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
+// Import test services for development testing
+if (import.meta.env.DEV) {
+  import("./test/testServices");
+}
+
 const queryClient = new QueryClient();
 
 const App = () => (

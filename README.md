@@ -1,73 +1,114 @@
-# Welcome to your Lovable project
+# GrubSniffer - Menu Macro Analyzer
 
-## Project info
+GrubSniffer is a React-based web application that uses OCR (Optical Character Recognition) and AI to analyze restaurant menu images, identify the highest protein menu item, and provide detailed macro nutritional information.
 
-**URL**: https://lovable.dev/projects/156b05e0-5dd6-4019-a2cf-8718a8953036
+## Features
 
-## How can I edit this code?
+- **Image Upload**: Drag and drop or click to upload menu images
+- **OCR Text Extraction**: Uses Tesseract.js to extract text from menu images
+- **AI Analysis**: Leverages OpenAI's GPT-4 to analyze menu items and identify the highest protein option
+- **Macro Estimation**: Provides detailed nutritional breakdown (protein, carbs, fat, calories)
+- **Responsive Design**: Works on desktop and mobile devices
+- **Real-time Processing**: Live analysis with progress indicators
 
-There are several ways of editing your application.
+## Technologies Used
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Components**: Radix UI, Tailwind CSS, Lucide React
+- **OCR**: Tesseract.js
+- **AI**: OpenAI GPT-4 API
+- **State Management**: React Hooks
+- **Routing**: React Router DOM
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/156b05e0-5dd6-4019-a2cf-8718a8953036) and start prompting.
+## Setup Instructions
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Clone the repository**
 
-**Use your preferred IDE**
+   ```bash
+   git clone <repository-url>
+   cd menu-macro-muse
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. **Install dependencies**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+   ```bash
+   npm install
+   ```
 
-Follow these steps:
+3. **Environment Configuration**
+   Create a `.env` file in the root directory and add your OpenAI API key:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   ```
+   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. **Run the development server**
 
-# Step 3: Install the necessary dependencies.
-npm i
+   ```bash
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+5. **Open your browser**
+   Navigate to `http://localhost:8080`
+
+## How to Use
+
+1. **Upload a Menu Image**:
+
+   - Click "Choose Image" or drag and drop a menu image
+   - Supported formats: JPG, PNG, and other common image formats
+   - Ensure the image is clear and well-lit for best OCR results
+
+2. **Wait for Analysis**:
+
+   - The app will extract text from the image using OCR
+   - Then analyze the menu items using AI to find the highest protein option
+   - This process typically takes 10-30 seconds
+
+3. **View Results**:
+   - See the identified highest protein menu item
+   - View detailed macro breakdown (protein, carbs, fat, calories)
+   - Click "Analyze Another Menu" to process a new image
+
+## API Configuration
+
+The application uses the OpenAI API for menu analysis. Make sure you have:
+
+- A valid OpenAI API key
+- Sufficient API credits
+- The key properly configured in your `.env` file
+
+## Development Testing
+
+For development testing, you can use the browser console:
+
+```javascript
+// Test OCR service
+await window.testServices.testOCRService();
+
+// Test OpenAI service
+await window.testServices.testOpenAIService();
+
+// Test complete flow
+await window.testServices.testCompleteFlow();
 ```
 
-**Edit a file directly in GitHub**
+## Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Important Notes
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **API Key Security**: The current implementation includes the API key in the frontend for development purposes. For production, implement a backend API to securely handle OpenAI requests.
+- **Image Quality**: For best results, use clear, well-lit images with readable text
+- **Menu Format**: Works best with standard restaurant menu formats
+- **Processing Time**: Analysis time depends on image size and complexity
 
-## What technologies are used for this project?
+## Troubleshooting
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/156b05e0-5dd6-4019-a2cf-8718a8953036) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **OCR Issues**: Ensure images are clear and text is readable
+- **API Errors**: Check your OpenAI API key and account credits
+- **Slow Performance**: Large images may take longer to process
+- **No Results**: Try with a different image or check console for error messages
