@@ -99,6 +99,17 @@ await window.testServices.testCompleteFlow();
 npm run build
 ```
 
+## Deployment to GitHub Pages
+
+This project is configured for easy deployment to GitHub Pages with secure API key handling.
+
+**Deployment steps:**
+
+1. **Add GitHub Secret**: Go to your repository Settings → Secrets and variables → Actions, create a new secret named `VITE_OPENAI_API_KEY` with your OpenAI API key as the value
+2. **Enable GitHub Pages**: In repository Settings → Pages, set Source to "GitHub Actions"
+3. **Push your code**: Push to the main branch and GitHub Actions will automatically build and deploy your app
+4. **Access your app**: Once deployed, visit `https://yourusername.github.io/grub_sniffer/`
+
 ## Important Notes
 
 - **API Key Security**: The current implementation includes the API key in the frontend for development purposes. For production, implement a backend API to securely handle OpenAI requests.
