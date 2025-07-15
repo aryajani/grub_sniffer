@@ -4,9 +4,16 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  // Set base path for GitHub Pages deployment
-  base: mode === 'production' ? '/grub_sniffer/' : '/',
+export default defineConfig(({ mode, command }) => {
+  // For GitHub Pages deployment, we need to set the base path to the repository name
+  // For local development and preview, we use the root path
+  const base = process.env.GITHUB_ACTIONS === 'true' ? '/grub_sniffer/' : '/';
+
+  console.log(`Building with base path: ${base}`);
+
+  return {
+  // Set base path dynamically based on environment
+  base,
   server: {
     host: "::",
     port: 8080,
@@ -21,4 +28,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-}));
+  };
+});
