@@ -5,14 +5,13 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
-  // For GitHub Pages deployment, we need to set the base path to the repository name
-  // For local development and preview, we use the root path
-  const base = process.env.GITHUB_ACTIONS === 'true' ? '/grub_sniffer/' : '/';
+  // Always use the repository name as the base path for consistency
+  const base = '/grub_sniffer/';
 
   console.log(`Building with base path: ${base}`);
 
   return {
-  // Set base path dynamically based on environment
+  // Set base path to repository name
   base,
   server: {
     host: "::",
