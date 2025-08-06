@@ -2,6 +2,8 @@
 
 GrubSniffer is a React-based web application that uses OCR (Optical Character Recognition) and AI to analyze restaurant menu images, identify the highest protein menu item, and provide detailed macro nutritional information.
 
+👉 **Live Demo**: [https://aryajani.github.io/grub_sniffer/](https://aryajani.github.io/grub_sniffer/)
+
 ## Features
 
 - **Image Upload**: Drag and drop or click to upload menu images
